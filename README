@@ -1,0 +1,7 @@
+## reset
+
+```curl -O https://raw.githubusercontent.com/alexandre-merle/arch-install/master/install_reset.sh && bash install_reset.sh /dev/sdb atom```
+
+## install
+
+```curl -O https://raw.githubusercontent.com/alexandre-merle/arch-install/master/install.sh && bash install.sh /dev/sdb atom```
