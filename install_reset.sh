@@ -2,19 +2,31 @@
 
 set -ex
 
-dest='/mnt'
-device=$1
-group=$2
+readonly PROGNAME=$(basename $0)
+readonly DEST="/mnt"
+readonly DEVICE=$1
+readonly GROUP=$2
 
-if [ -z "$1" ] || [ -z "$2" ]; then
-	echo "usage: ${0} <device> <group>"
-	exit 1
-fi
+check_usage() {
+	if [ -z "$1" ] || [ -z "$2" ]; then
+		echo "usage: $PROGNAME <DEVICE> <GROUP>"
+		exit 1
+	fi
+}
 
-umount -R $dest || true
-lvremove -f /dev/mapper/${group}-root || true
-lvremove -f /dev/mapper/${group}-swap || true
-lvremove -f /dev/mapper/${group}-home || true
-vgremove -f ${group} || true
-pvremove -f /dev/mapper/base || true
-cryptsetup remove /dev/mapper/base || true
+remove() {
+	umount -R $DEST || true
+	lvremove -f /dev/mapper/${GROUP}-root || true
+	lvremove -f /dev/mapper/${GROUP}-swap || true
+	lvremove -f /dev/mapper/${GROUP}-home || true
+	vgremove -f ${GROUP} || true
+	pvremove -f /dev/mapper/base || true
+	cryptsetup remove /dev/mapper/base || true
+}
+
+main() {
+  check_usage
+	remove
+}
+
+main
