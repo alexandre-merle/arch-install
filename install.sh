@@ -22,7 +22,7 @@ check_args() {
   fi
 }
 
-partion_disk() {
+partition_disk() {
 	# DESTroying mbr or gpt
 	sgdisk -Z $DEVICE
 	# creating new gpt table
@@ -36,7 +36,7 @@ partion_disk() {
 	local end_sector=$(sgdisk -E $DEVICE)
 	sgdisk -n 3:3074048:${end_sector} -c 3:"Linux LVM" -t 3:8e00 $DEVICE
 	# print partition table
-  sgdisk -p ${DEVICE}
+	sgdisk -p ${DEVICE}
 }
 
 format_disk() {
@@ -112,7 +112,7 @@ unmount() {
 main() {
 	test_connection
 	check_args
-	partion_disk
+	partition_disk
 	format_disk
 	mount_volumes
 	lvm_init
