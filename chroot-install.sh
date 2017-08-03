@@ -2,8 +2,8 @@
 
 set -ex
 
-local DEVICE=$1
-local GROUP=$2
+readonly DEVICE=$1
+readonly GROUP=$2
 
 lvm_mount() {
   mkdir /run/lvm

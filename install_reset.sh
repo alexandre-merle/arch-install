@@ -8,7 +8,7 @@ readonly DEVICE=$1
 readonly GROUP=$2
 
 check_usage() {
-	if [ -z "$1" ] || [ -z "$2" ]; then
+	if [ -z $DEVICE ] || [ -z $GROUP ]; then
 		echo "usage: $PROGNAME <DEVICE> <GROUP>"
 		exit 1
 	fi

@@ -40,9 +40,6 @@ partition_disk() {
 }
 
 format_disk() {
-	local boot_disk=$(find -L /dev/disk/by-path -samefile ${DEVICE}2)
-	local efi_boot_disk=$(find -L /dev/disk/by-path -samefile ${DEVICE}1)
-
 	# setup encryption
 	cryptsetup luksFormat -c aes-xts-plain64 -s 512 ${DEVICE}3
 	cryptsetup open ${DEVICE}3 base
@@ -60,12 +57,15 @@ format_disk() {
 	mkfs.ext4 -L archsystem /dev/mapper/${GROUP}-root
 	mkfs.ext4 -L archuser /dev/mapper/${GROUP}-home
 	mkswap /dev/mapper/${GROUP}-swap
+	local boot_disk=$(find -L /dev/disk/by-path -samefile ${DEVICE}2)
+	local efi_boot_disk=$(find -L /dev/disk/by-path -samefile ${DEVICE}1)
 	mkfs.ext4 -L boot ${boot_disk}
 	mkfs.fat -F32 ${efi_boot_disk}
 }
 
 mount_volumes() {
 	# mouting volumes
+	local boot_disk=$(find -L /dev/disk/by-path -samefile ${DEVICE}2)
 	local efi_boot_disk=$(find -L /dev/disk/by-path -samefile ${DEVICE}1)
 	mkdir -p ${DEST}
 	mount /dev/mapper/${GROUP}-root ${DEST}
@@ -115,8 +115,10 @@ main() {
 	partition_disk
 	format_disk
 	mount_volumes
+	install_basic
 	lvm_init
-	umount
+	launch_chroot
+	unmount
 }
 
 main
