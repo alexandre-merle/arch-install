@@ -24,9 +24,7 @@ set_locales() {
   echo "${GROUP}-computer" > /etc/hostname
 
   # adding hostname to hosts
-  cat >> /etc/hosts << EOF
-  127.0.1.1	${GROUP}-computer.localdomain ${GROUP}-computer
-  EOF
+  echo "127.0.1.1	${GROUP}-computer.localdomain ${GROUP}-computer" >> /etc/hosts
 }
 
 root_install() {
@@ -38,7 +36,7 @@ root_install() {
 
 boot_install() {
   # configuration of grub for encryption on top of lvm / volume
-  echo "GRUB_CMDLINE_LINUX=\"cryptDEVICE=${DEVICE}3:base\"" >> /etc/default/grub
+  echo "GRUB_CMDLINE_LINUX='cryptdevice=${DEVICE}3:base'" >> /etc/default/grub
   echo "GRUB_ENABLE_CRYPTODISK=y" >> /etc/default/grub
 
   # add hooks to mkinitcpio

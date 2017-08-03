@@ -25,7 +25,7 @@ remove() {
 }
 
 main() {
-  check_usage
+	check_usage
 	remove
 }
 
