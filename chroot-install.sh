@@ -60,7 +60,6 @@ internet_setup() {
 
 gui_install() {
   pacman -Sy --noconfirm nvidia nvidia-utils lightdm-gtk-greeter xorg-server xorg-xinit xterm xorg-xclock awesome
-  cp -T /mnt/etc/X11/xinit/xinitrc /mnt/root/.xprofile
   systemctl enable lightdm.service
 }
 
