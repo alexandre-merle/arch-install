@@ -60,7 +60,8 @@ internet_setup() {
 }
 
 user_install() {
-  useradd -m -g users -G adm,log,sudo,wheel -s /bin/bash $USER
+  useradd -m -g users -G adm,log,wheel -s /bin/bash $USER
+  echo '%wheel      ALL=(ALL) ALL' | EDITOR='tee -a' visudo
   passwd $USER
 }
 
