@@ -60,7 +60,7 @@ internet_setup() {
 }
 
 gui_install() {
-  pacman -Sy --noconfirm nvidia xorg-server awesome
+  pacman -Sy --noconfirm xf86-video-nouveau xorg-server xorg-xinit awesome
 }
 
 finish() {
