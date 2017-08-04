@@ -36,7 +36,7 @@ root_install() {
 
 boot_install() {
   # configuration of grub for encryption on top of lvm / volume
-  echo "GRUB_CMDLINE_LINUX='cryptdevice=${DEVICE}3:base'" >> /etc/default/grub
+  echo "GRUB_CMDLINE_LINUX=\"cryptdevice=${DEVICE}3:base\"" >> /etc/default/grub
   echo "GRUB_ENABLE_CRYPTODISK=y" >> /etc/default/grub
 
   # add hooks to mkinitcpio
