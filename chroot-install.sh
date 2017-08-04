@@ -58,10 +58,15 @@ internet_setup() {
   done
 }
 
+gui_install() {
+  pacman -Sy xorg-server awesome
+}
+
 finish() {
   umount /run/lvm
 
   internet_setup
+  gui_install
   # leaving chroot env
   exit
 }
