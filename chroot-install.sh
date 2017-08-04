@@ -32,7 +32,7 @@ root_install() {
   # setting root password
   passwd
 
-  pacman -Sy --noconfirm grub efibootmgr
+  pacman -Sy --noconfirm grub efibootmgr sudo
 }
 
 boot_install() {
@@ -60,7 +60,7 @@ internet_setup() {
 }
 
 user_install() {
-  useradd -m -g users -g wheel -s /bin/bash $USER
+  useradd -m -g users -G adm,log,sudo,wheel -s /bin/bash $USER
   passwd $USER
 }
 
