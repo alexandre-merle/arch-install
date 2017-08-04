@@ -49,16 +49,19 @@ boot_install() {
   grub-install --recheck --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub
 }
 
+internet_setup() {
+  local iethernet=$(ip addr | grep '[0-9]: en' | cut -d ':' -f 2 | tr -d ' ')
+
+  for interface in $iethernet; do
+    systemctl enable dhcpcd@$interface
+    systemctl start dhcpcd@$interface
+  done
+}
+
 finish() {
   umount /run/lvm
 
-  iethernet=`ip addr | grep '[0-9]: en' | cut -d ':' -f 2 | tr -d ' '`
-
-  for interface in $iethernet; do
-  systemctl enable dhcpcd@$interface
-  systemctl start dhcpcd@$interface
-  done
-
+  internet_setup
   # leaving chroot env
   exit
 }
