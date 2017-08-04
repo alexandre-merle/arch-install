@@ -55,14 +55,13 @@ internet_setup() {
 
   for interface in $iethernet; do
     systemctl enable dhcpcd@$interface
-    systemctl start dhcpcd@$interface
   done
 }
 
 gui_install() {
-  pacman -Sy --noconfirm nvidia nvidia-utils lib32-nvidia-utils	lightdm-gtk-greeter xorg-server xorg-xinit xterm xorg-xclock awesome
+  pacman -Sy --noconfirm nvidia nvidia-utils lightdm-gtk-greeter xorg-server xorg-xinit xterm xorg-xclock awesome
+  cp -T /mnt/etc/X11/xinit/xinitrc /mnt/root/.xprofile
   systemctl enable lightdm.service
-  cp /etc/X11/xinit/xinitrc /mnt/root/.xprofile
 }
 
 finish() {
