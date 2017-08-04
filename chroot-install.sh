@@ -4,6 +4,7 @@ set -ex
 
 readonly DEVICE=$1
 readonly GROUP=$2
+readonly USER=$3
 
 lvm_mount() {
   mkdir /run/lvm
@@ -58,6 +59,11 @@ internet_setup() {
   done
 }
 
+user_install() {
+  useradd -m -g users -g wheel -s /bin/bash $USER
+  passwd $USER
+}
+
 gui_install() {
   pacman -Sy --noconfirm nvidia nvidia-utils lightdm-gtk-greeter xorg-server xorg-xinit xterm xorg-xclock awesome
   systemctl enable lightdm.service
@@ -76,6 +82,7 @@ main() {
   lvm_mount
   set_locales
   root_install
+  user_install
   boot_install
   finish
 }

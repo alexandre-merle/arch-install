@@ -6,18 +6,19 @@ readonly PROGNAME=$(basename $0)
 readonly DEST="/mnt"
 readonly DEVICE=$1
 readonly GROUP=$2
+readonly USER=$3
 
 test_connection() {
   ping -c 1 www.google.com
 }
 
 check_args() {
-  if [ -z $DEVICE ] || [ -z $GROUP ]; then
-	  echo "usage: ./$PROGNAME <DEVICE> <GROUP>"
+  if [ -z $DEVICE ] || [ -z $GROUP ] || [ -z $USER ]; then
+	  echo "usage: ./$PROGNAME <DEVICE> <GROUP> <USER> [<RESET>]"
 	  exit 1
   fi
 
-  if [ -z "$3" ]; then
+  if [ -z "$4" ]; then
 	  curl -O https://raw.githubusercontent.com/alexandre-merle/arch-install/master/install_reset.sh && bash install_reset.sh $DEVICE $GROUP
   fi
 }
@@ -98,7 +99,7 @@ lvm_init() {
 
 launch_chroot() {
 	# chroot to the new system and run installation script
-	arch-chroot $DEST /bin/bash /root/chroot-install.sh ${DEVICE} ${GROUP}
+	arch-chroot $DEST /bin/bash /root/chroot-install.sh ${DEVICE} ${GROUP} ${USER}
 }
 
 unmount() {
