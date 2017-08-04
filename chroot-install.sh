@@ -60,8 +60,9 @@ internet_setup() {
 }
 
 gui_install() {
-  pacman -Sy --noconfirm nvidia xorg-server xorg-xinit xterm xorg-xclock awesome
-  echo "exec awesome" /mnt/root/.xinitrc
+  pacman -Sy --noconfirm nvidia nvidia-utils lib32-nvidia-utils	lightdm-gtk-greeter xorg-server xorg-xinit xterm xorg-xclock awesome
+  systemctl enable lightdm.service
+  cp /etc/X11/xinit/xinitrc /mnt/root/.xprofile
 }
 
 finish() {
