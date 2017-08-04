@@ -59,7 +59,7 @@ internet_setup() {
 }
 
 gui_install() {
-  pacman -Sy xorg-server awesome
+  pacman -Sy nvidia-340xx-utils xorg-server awesome
 }
 
 finish() {
