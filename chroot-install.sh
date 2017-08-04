@@ -35,9 +35,9 @@ root_install() {
 }
 
 boot_install() {
-	local root_disk=$(find -L /dev/disk/by-path -samefile ${DEVICE}3)
+	local root_disk=$(find -L /dev/disk/by-uuid -samefile ${DEVICE}3)
   # configuration of grub for encryption on top of lvm / volume
-  echo "GRUB_CMDLINE_LINUX=\"cryptdevice=${root_disk}3:base\"" >> /etc/default/grub
+  echo "GRUB_CMDLINE_LINUX=\"cryptdevice=${root_disk}:base\"" >> /etc/default/grub
   echo "GRUB_ENABLE_CRYPTODISK=y" >> /etc/default/grub
 
   # add hooks to mkinitcpio
@@ -60,7 +60,7 @@ internet_setup() {
 }
 
 gui_install() {
-  pacman -Sy nvidia-340xx-utils xorg-server awesome
+  pacman -Sy --noconfirm nvidia xorg-server awesome
 }
 
 finish() {
